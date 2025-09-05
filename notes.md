@@ -8,6 +8,20 @@
 - [Canvas](https://byu.instructure.com)
 - [MDN](https://developer.mozilla.org)
 
+## Git and GitHub
+
+It's easier to create a repository in Github first and then clone it locally.
+
+git add -> git commit -> git push
+
+git fetch: get latest info about changes in Github without changing local repo
+
+git status: see differences between clones
+
+GithHub fork: provides the ability to create a copy of a GitHub repository on GitHub
+
+To change something in someone else's repo: fork repo, then pull request with changes
+
 ## AWS
 
 My IP address is: 54.81.96.130
