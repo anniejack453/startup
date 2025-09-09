@@ -1,9 +1,7 @@
-# My startup name here
+# StoryTogether
+Stories are better when shared.
 
 [My Notes](notes.md)
-
-I do not know what I am doing yet.
-
 
 > [!NOTE]
 >  This is a template for your startup application. You must modify this `README.md` file for each phase of your development. You only need to fill in the section for each deliverable when that deliverable is submitted in Canvas. Without completing the section for a deliverable, the TA will not know what to look for when grading your submission. Feel free to add additional information to each deliverable description, but make sure you at least have the list of rubric items and a description of what you did for each item.
@@ -51,12 +49,16 @@ sequenceDiagram
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - Uses correct HTML structure for application. Five HTML pages. One for login, one for home page, one for browse page, one for story page, one for submission page. Hyperlinks between different pages.
+- **CSS** - Application styling that looks good on different screen sizes, uses good whitespace, color choice and contrast.
+- **React** - Provides login, user functionality by posting ideas and switching pages.
+- **Service** - Backend service with endpoints for:
+    * retrieving color palatte for story pages
+    * retrieving posts
+    * submitting posts
+    * Register, login, and logout users. Credentials securely stored in database. Can't submit anything unless authenticated.
+- **DB/Login** - Store authentication information, users, story premises and plot ideas in database. 
+- **WebSocket** - As users submit story and plot ideas, the pages are updated for all users.
 
 ## 🚀 AWS deliverable
 
