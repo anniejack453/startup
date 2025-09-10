@@ -11,9 +11,6 @@ Stories are better when shared.
 
 ## 🚀 Specification Deliverable
 
-> [!NOTE]
->  Fill in this sections as the submission artifact for this deliverable. You can refer to this [example](https://github.com/webprogramming260/startup-example/blob/main/README.md) for inspiration.
-
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
 - [x] Proper use of Markdown
@@ -32,12 +29,12 @@ The user starts out with a Login page. Once logged in, they see a home page with
 
 ![Design image](startupIdeaPic.jpg)
 
-```mermaid
+<!-- ```mermaid
 sequenceDiagram
     actor You
     actor Website
     You->>Website: Replace this with your design
-```
+``` -->
 
 ### Key features
 
