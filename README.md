@@ -28,9 +28,9 @@ Ever had a fantastic idea for a story, but no idea how to write it on your own? 
 
 ### Design
 
-![Design image](c:\Users\annie\Downloads\CS 260\startupIdeaPic.jpg)
+![Design image](startupIdeaPic.jpg)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+The user starts out with a Login page. Once logged in, they see a home page with the stories they have personally created. They can choose to click the "start your story" button to create a story, or they could click "browse" to browse story ideas from other users. If the title of a story is clicked on, the user is taken to the story page, where the title, premise, and users' thoughts and ideas are visible.
 
 ```mermaid
 sequenceDiagram
