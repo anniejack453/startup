@@ -16,11 +16,11 @@ Stories are better when shared.
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] Proper use of Markdown
-- [ ] A concise and compelling elevator pitch
-- [ ] Description of key features
-- [ ] Description of how you will use each technology
-- [ ] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
+- [x] Proper use of Markdown
+- [x] A concise and compelling elevator pitch
+- [x] Description of key features
+- [x] Description of how you will use each technology
+- [x] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
 
 ### Elevator pitch
 
@@ -28,9 +28,9 @@ Ever had a fantastic idea for a story, but no idea how to write it on your own? 
 
 ### Design
 
-![Design image](startupIdeaPic.jpg)
-
 The user starts out with a Login page. Once logged in, they see a home page with the stories they have personally created. They can choose to click the "start your story" button to create a story, or they could click "browse" to browse story ideas from other users. If the title of a story is clicked on, the user is taken to the story page, where the title, premise, and users' thoughts and ideas are visible.
+
+![Design image](startupIdeaPic.jpg)
 
 ```mermaid
 sequenceDiagram
@@ -41,21 +41,24 @@ sequenceDiagram
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Secure login over HTTPS
+- Ability to post stories or suggestions
+- Display of stories and suggestions
+- Stories and suggestions are persistently stored
+- Ability to select story ideas to read
+- Updates on stories and suggestions displayed in realtime
 
 ### Technologies
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Uses correct HTML structure for application. Five HTML pages. One for login, one for home page, one for browse page, one for story page, one for submission page. Hyperlinks between different pages.
+- **HTML** - Uses correct HTML structure for application. Six HTML pages. One for login, one for home page, one for browse page, one for story page, one for story idea submission page, one for idea submission page. Hyperlinks between different pages.
 - **CSS** - Application styling that looks good on different screen sizes, uses good whitespace, color choice and contrast.
-- **React** - Provides login, user functionality by posting ideas and switching pages.
+- **React** - Provides login, user functionality by posting stories, ideas, and switching pages.
 - **Service** - Backend service with endpoints for:
-    * retrieving color palatte for story pages
-    * retrieving posts
-    * submitting posts
+    * Retrieving icons for stories using https://lordicon.com/ 
+    * Retrieving posts
+    * Submitting posts
     * Register, login, and logout users. Credentials securely stored in database. Can't submit anything unless authenticated.
 - **DB/Login** - Store authentication information, users, story premises and plot ideas in database. 
 - **WebSocket** - As users submit story and plot ideas, the pages are updated for all users.
