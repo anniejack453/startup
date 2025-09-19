@@ -152,6 +152,47 @@ label	Individual input label	<label for="range">Range: </label>
 output	Output of input	<output for="range">0</output>
 meter	Display value with a known range	<meter min="0" max="100" value="50"></meter>
 
+### Input Types
+Type	Meaning
+text	Single line textual value
+password	Obscured password
+email	Email address
+tel	Telephone number
+url	URL address
+number	Numerical value
+checkbox	Inclusive selection
+radio	Exclusive selection
+range	Range limited number
+date	Year, month, day
+datetime-local	Date and time
+month	Year, month
+week	Week of year
+color	Color
+file	Local file
+submit	button to trigger form submission
+
+example: <label for="checkbox1">Check me</label> <input type="checkbox" name="varCheckbox" value="checkbox1" checked />
+
+Attribute	Meaning
+name	The name of the input. This is submitted as the name of the input if used in a form
+disabled	Disables the ability for the user to interact with the input
+value	The initial value of the input
+required	Signifies that a value is required in order to be valid
+
+### HTML Media
+Images: <img alt="mountain landscape" src="https://images.pexels.com/photos/164170/pexels-photo-164170.jpeg" />
+
+Audio: <audio controls src="testAudio.mp3"></audio>
+
+Video: <video controls width="300" crossorigin="anonymous">
+  <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
+</video>
+
+Internal Media:
+SVG: <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" stroke="red" fill="red" style="border: 1px solid #000000">
+  <circle cx="150" cy="100" r="50" />
+</svg>
+
 
 This was easy. I was careful to use the correct structural elements such as header, footer, main, nav, and form. The links between the three views work great using the `a` element.
 
