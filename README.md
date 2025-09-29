@@ -71,14 +71,14 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
 - [x] **HTML pages** - I created 6 html pages.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [X] **Proper HTML element usage** - I properly used html tags to separate different elements and organized everything in elements.
+- [x] **Links** - I had links between pages.
+- [x] **Text** - I had textual representation of my site content.
+- [x] **3rd party API placeholder** - I had a 3rd party api placeholder to choose an icon for a story.
+- [x] **Images** - I had an image on the login page.
+- [x] **Login placeholder** - I had a login form placeholder.
+- [x] **DB data placeholder** - I had a DB data placeholder.
+- [x] **WebSocket placeholder** - I had a WS placeholder.
 
 ## 🚀 CSS deliverable
 
