@@ -4,17 +4,32 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>StoryTogether</title>
-        <link rel="icon" href="favicon.ico" />
+        <link rel="stylesheet" href="main.css" />
+
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+            crossorigin="anonymous"
+        />
     </head>
     <body>
-        <header>
-            <h1>StoryTogether</h1>
-            <nav>
-                <menu>
-                <li><a href="home.html">Home</a></li>
-                <li><a href="browse.html">Browse</a></li>
-                <li><a href="createStory.html">Create Your Story</a></li>
+        <header class="container-fluid">
+            <nav class="navbar fixed-top navbar-purple d-flex justify-content-between">
+                <h1>StoryTogether</h1>
+                <menu class="navbar-nav d-flex flex-row">
+                <li class="nav-item">
+                    <a class="nav-link" href="home.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="browse.html">Browse</a>
+                </li>
+                <li class="nav-item">
+                </li>
                 </menu>
+                <div class="ms-auto">
+                    <a class="nav-link button btn-primary" href="createStory.html">Create Your Story</a>
+                </div>
             </nav>
         </header>
         <main>
@@ -32,10 +47,10 @@
             </div>
         </main>
         <footer>
-            <hr />
-      <span class="text-reset">Anna Egbert</span>
-      <br />
-      <a href="https://github.com/anniejack453/startup">GitHub</a>
+            <div class="container-fluid">
+                <span class="text-reset">Anna Egbert</span>
+                <a class="text-reset" href="https://github.com/anniejack453/startup">GitHub</a>
+            </div>
         </footer>
     </body>
 </html>

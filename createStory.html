@@ -7,14 +7,22 @@
         <link rel="icon" href="favicon.ico" />
     </head>
     <body>
-        <header>
-            <h1>StoryTogether</h1>
-            <nav>
-                <menu>
-                <li><a href="home.html">Home</a></li>
-                <li><a href="browse.html">Browse</a></li>
-                <li><a href="createStory.html">Create Your Story</a></li>
+        <header class="container-fluid">
+            <nav class="navbar fixed-top navbar-purple d-flex justify-content-between">
+                <h1>StoryTogether</h1>
+                <menu class="navbar-nav d-flex flex-row">
+                <li class="nav-item">
+                    <a class="nav-link" href="home.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="browse.html">Browse</a>
+                </li>
+                <li class="nav-item">
+                </li>
                 </menu>
+                <div class="ms-auto">
+                    <a class="nav-link button btn-primary" href="createStory.html">Create Your Story</a>
+                </div>
             </nav>
         </header>
         <main>
@@ -33,10 +41,10 @@
             </form>
         </main>
         <footer>
-            <hr />
-      <span class="text-reset">Anna Egbert</span>
-      <br />
-      <a href="https://github.com/anniejack453/startup">GitHub</a>
+            <div class="container-fluid">
+                <span class="text-reset">Anna Egbert</span>
+                <a class="text-reset" href="https://github.com/anniejack453/startup">GitHub</a>
+            </div>
         </footer>
     </body>
 </html>
