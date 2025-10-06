@@ -284,8 +284,6 @@ This took a couple hours to get it how I wanted. It was important to make it res
 
 
 
-Bootstrap seems a bit like magic. It styles things nicely, but is very opinionated. You either do, or you do not. There doesn't seem to be much in between.
-
 I did like the navbar it made it super easy to build a responsive header.
 
 ```html
@@ -324,6 +322,68 @@ I also used SVG to make the icon and logo for the app. This turned out to be a p
   <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="72" font-family="Arial" fill="white">C</text>
 </svg>
 ```
+## JavaScript Notes
+
+Script block: Directly including it in the HTML within the content of a <script> element
+External code: Using the src attribute of the script element to reference an external JavaScript file.
+Inline event attribute: Putting JavaScript directly inline as part of an event attribute handler.
+
+index.js
+```js
+function sayHello() {
+  alert("Hello");
+}
+```
+index.html
+```html
+<!-- external script -->
+<head>
+  <script src="index.js"></script>
+</head>
+<body>
+  <button onclick="sayHello()">Say Hello</button>
+  <button onclick="sayGoodbye()">Say Goodbye</button>
+
+  <!-- internal script block -->
+  <script>
+    function sayGoodbye() {
+      alert("Goodbye");
+    }
+  </script>
+
+  <!-- inline attribute handler -->
+  <script>
+    let i = 1;
+  </script>
+  <button onclick="alert(`i = ${i++}`)">counter</button>
+</body>
+```
+
+## Node and NPM
+With NPM initialized to work with your project, you can now use it to install a node package. You can search for it on the NPM website, see how often it is installed, examine the source code, and learn about who created it. You install the package using npm install followed by the name of the package. If you decide you no longer want a package dependency you can always remove it with the npm uninstall <package name here> console command.
+When you start installing package dependencies, NPM will create an additional file named package-lock.json and a directory named node_modules in your project directory. The node_modules directory contains the actual JavaScript files for the package and all of its dependent packages. As you install several packages this directory will start to get very large. You do not want to check this directory into your source control system since it can be very large and can be rebuilt using the information contained in the package.json and package-lock.json files. So make sure you include node_modules in your .gitignore file.
+
+When you clone your source code from GitHub to a new location, the first thing you should do is run npm install in the project directory. This will cause NPM to download all of the previously installed packages and recreate the node_modules directory.
+
+The package-lock.json file tracks the version of the package that you installed. That way if you rebuild your node_modules directory you will have the version of the package you initially installed and not the latest available version, which might not be compatible with your code.
+
+create index.js
+```js
+const giveMeAJoke = require('give-me-a-joke');
+giveMeAJoke.getRandomDadJoke((joke) => {
+  console.log(joke);
+});
+```
+run node index.js on console
+
+Steps:
+Create your project directory
+Initialize it for use with NPM by running npm init -y
+Make sure .gitignore file contains node_modules
+Install any desired packages with npm install <package name here>
+Add require('<package name here>') to your application's JavaScript
+Use the code the package provides in your JavaScript
+Run your code with node index.js
 
 ## React Part 1: Routing
 
