@@ -5,7 +5,7 @@ export function Browse() {
   return (
     <main>
         <div className="text-center container-fluid">
-            <div className="story-links mx-auto text-start" style={{ maxWidth: '800px' }}>
+            <div className="story-links mx-auto text-start" style={{maxWidth: '800px'}}>
                 <div className="mb-4">
                     <div id="icon">icon placeholder</div>
                     <NavLink to="/storyPage" className="fs-3 text-decoration-none text-dark fw-semibold">

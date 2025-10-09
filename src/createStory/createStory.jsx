@@ -1,9 +1,17 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function CreateStory() {
+  const navigate = useNavigate();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    navigate('/storyPage');
+  };
+
   return (
     <main className="container-fluid text-center">
-      <form method="get" action="storyPage.html" className="text-center container-fluid">
+      <form onSubmit={handleSubmit} className="text-center container-fluid">
             <div>
             <a href="https://lordicon.com/">Select icon</a>
             <p>^Placeholder to use API to select icon for story</p>
