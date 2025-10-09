@@ -95,9 +95,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Bundled using Vite** - I did not complete this part of the deliverable.
-- [ ] **Components** - I did not complete this part of the deliverable.
-- [ ] **Router** - I did not complete this part of the deliverable.
+- [x] **Bundled using Vite** - The startup is bundled using Vite.
+- [x] **Components** - Each html page is now a component and renders correctly.
+- [x] **Router** - The startup uses a router.
 
 ## 🚀 React part 2: Reactivity deliverable
 
