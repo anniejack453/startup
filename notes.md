@@ -385,6 +385,25 @@ Add require('<package name here>') to your application's JavaScript
 Use the code the package provides in your JavaScript
 Run your code with node index.js
 
+## JavaScript
+
+Array Functions:
+Function	Meaning	Example
+push	Add an item to the end of the array	a.push(4)
+pop	Remove an item from the end of the array	x = a.pop()
+slice	Return a sub-array	a.slice(1,-1)
+sort	Run a function to sort an array in place	a.sort((a,b) => b-a)
+values	Creates an iterator for use with a for of loop	for (i of a.values()) {...}
+find	Find the first item satisfied by a test function	a.find(i => i < 2)
+forEach	Run a function on each array item	a.forEach(console.log)
+reduce	Run a function to reduce each array item to a single item	a.reduce((a, c) => a + c)
+map	Run a function to map an array to a new array	a.map(i => i+i)
+filter	Run a function to remove items	a.filter(i => i%2)
+every	Run a function to test if all items match	a.every(i => i < 3)
+some	Run a function to test if any items match	a.some(i => i < 1)
+
+console is basically print, but has console.log, console.time, console.timeEnd, console.count.
+
 ## React Part 1: Routing
 
 Setting up Vite and React was pretty simple. I had a bit of trouble because of conflicting CSS. This isn't as straight forward as you would find with Svelte or Vue, but I made it work in the end. If there was a ton of CSS it would be a real problem. It sure was nice to have the code structured in a more usable way.
