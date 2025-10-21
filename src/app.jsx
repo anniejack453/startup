@@ -40,7 +40,7 @@ function App() {
                     </menu>
                     {authState === AuthState.Authenticated && (
                         <div className="d-flex align-items-center ms-auto" style={{paddingRight: '20px'}}>
-                        <span className="me-3 fw-semibold" id="username">Username</span>
+                        <span className="me-3 fw-semibold" id="username">{userName ? `${userName}` : ""}</span>
                         <NavLink className="btn btn-outline-dark btn-md fw-bold px-5 py-3" to="/createStory">
                             Create Your Story
                         </NavLink>
