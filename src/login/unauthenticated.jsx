@@ -21,9 +21,7 @@ export function Unauthenticated(props) {
   return (
     <>
       <div>
-        {/* <div id="picture" className="picture-box"><img className="img-fluid w-100" src="scenery-art-wallpaper.jpg" alt="random" /></div> */}
-        {/* <h1>Let's tell a story, together</h1> */}
-        <form onSubmit={handleSubmit}>
+        <div>
             <div className="input-group mb-3">
                 <span className="input-group-text">Email:</span>
                 <input className="form-control" type="text" value={userName} onChange={(e) => setUserName(e.target.value)} placeholder="your@email.com" />
@@ -38,7 +36,7 @@ export function Unauthenticated(props) {
             <Button variant='secondary' onClick={() => createUser()} disabled={!userName || !password}>
                 Create
             </Button>
-        </form>
+        </div>
       </div>
 
       <MessageDialog message={displayError} onHide={() => setDisplayError(null)} />
