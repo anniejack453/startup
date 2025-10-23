@@ -553,6 +553,32 @@ What will the following code using Promises output when executed?
  5) Promise chain: Promise.resolve(2).then(x=>x*2).then(x=>x+1).then(console.log) -> 5
  6) Reject handled -> shows error via catch.
 
+ The rendering process of your HTML executes on a single thread. That means that you cannot take a long time processing JavaScript on the main rendering thread. Long running, or blocking tasks, should be executed with the use of a JavaScript Promise. The execution of a promise allows the main rendering thread to continue while some action is executed in the background. You create a promise by calling the Promise object constructor and passing it an executor function that runs the asynchronous operation. Executing asynchronously means that promise constructor may return before the promise executor function runs. The state of the promise execution is always in one of three possible states.
+
+pending - Currently running asynchronously
+fulfilled - Completed successfully
+rejected - Failed to complete
+
+const coinToss = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    if (Math.random() > 0.1) {
+      resolve(Math.random() > 0.5 ? 'heads' : 'tails');
+    } else {
+      reject('fell off table');
+    }
+  }, 10000);
+});
+We then chain the then, catch and finally functions to the coinToss object in order to handle each of the possible results.
+
+coinToss
+  .then((result) => console.log(`Coin toss result: ${result}`))
+  .catch((err) => console.log(`Error: ${err}`))
+  .finally(() => console.log('Toss completed'));
+
+// OUTPUT:
+//    Coin toss result: tails
+//    Toss completed
+
 What does a div tag do?
  <div> is a container element used to group other HTML elements together. It has no visual
  effect by itself, but helps structure the page for styling and layout using CSS. Commonly used
