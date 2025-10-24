@@ -73,10 +73,10 @@ function App() {
             </header>
 
             <Routes>
-                <Route path='/home' element={<Home />} />
-                <Route path='/browse' element={<Browse stories={stories}/>} />
+                <Route path='/home' element={<Home userName={userName} />} />
+                <Route path='/browse' element={<Browse userName={userName}/>} />
                 <Route path='/contribute/:id' element={<Contribute stories={stories} setStories={setStories}/>} />
-                <Route path='/createStory' element={<CreateStory stories={stories} setStories={setStories} username={userName}/>} />
+                <Route path='/createStory' element={<CreateStory stories={stories} setStories={setStories} userName={userName}/>} />
                 <Route path='/storyPage/:id' element={<StoryPage stories={stories} setStories={setStories} />} />
                 <Route path='*' element={<NotFound />} />
                 <Route

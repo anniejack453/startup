@@ -1,35 +1,34 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { NavLink } from 'react-router-dom';
 
-export function Browse() {
-    const [review, setReviews] = React.useState([]);
+export function Browse({userName}) {
+    const [stories, setStories] = useState([]);
 
-    React.useEffect(() => {
-        const reviewText = localStorage.getItem('review');
-        if (reviewText) {
-        setReviews(JSON.parse(reviewText));
-        }
-    }, []);
+    useEffect(() => {
+        const allStories = JSON.parse(localStorage.getItem('stories')) || [];
+        const otherStories = allStories.filter(story => story.author !== userName);
+        setStories(otherStories);
+    }, [userName]);
 
   return (
     <main>
         <div className="text-center container-fluid">
             <div className="story-links mx-auto text-start" style={{maxWidth: '800px'}}>
-                <div className="mb-4">
-                    <div id="icon">icon placeholder</div>
-                    <NavLink to="/storyPage" className="fs-3 text-decoration-none text-dark fw-semibold">
-                        Someone's Story Idea #1 (still a link)
-                    </NavLink>
-                    <p id="review">Most recent idea suggestion title displayed here</p>
-                </div>
-                <div>
-                    <NavLink to="/storyPage" className="fs-3 text-decoration-none text-dark fw-semibold">
-                        Someone's Story Idea #2
-                    </NavLink>
-                    <p id="review">This will display links to other users' story idea pages
-                    stored in the database. Most recent suggestions will be updated
-                    in realtime with Websocket.</p>
-                </div>
+                {stories.length > 0 ? (
+                    stories.map((story) => (
+                    <div key={story.id} className="mb-4">
+                        <NavLink
+                        to={`/storyPage/${story.id}`}
+                        className="fs-3 text-decoration-none text-dark fw-semibold"
+                        >
+                        {story.title}
+                        </NavLink>
+                        <p>{story.premise}</p>
+                    </div>
+                    ))
+                ) : (
+                    <p>Other users haven’t created any stories yet.</p>
+                )}
             </div>
         </div>
     </main>

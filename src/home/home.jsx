@@ -1,27 +1,34 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { NavLink } from 'react-router-dom';
 
-export function Home() {
+export function Home({userName}) {
+  const [stories, setStories] = useState([]);
+
+  useEffect(() => {
+    const allStories = JSON.parse(localStorage.getItem('stories')) || [];
+    const userStories = allStories.filter((story) => story.author === userName);
+    setStories(userStories);
+  }, [userName]);
 
   return (
     <main className="container-fluid text-center">
       <div className="text-center container-fluid">
             <div className="story-links mx-auto text-start" style={{maxWidth: '800px'}}>
-                <div className="mb-4">
-                    <div id="icon">icon placeholder</div>
-                    <NavLink to="/storyPage" className="fs-3 text-decoration-none text-dark fw-semibold">
-                        Your Story Idea #1 (still a link)
-                    </NavLink>
-                    <p>Most recent idea suggestion title displayed here</p>
-                </div>
-                <div>
-                    <NavLink to="/storyPage" className="fs-3 text-decoration-none text-dark fw-semibold">
-                        Your Story Idea #2
-                    </NavLink>
-                    <p>This will display links to other users' story idea pages
-                    stored in the database. Most recent suggestions will be updated
-                    in realtime with Websocket.</p>
-                </div>
+                {stories.length > 0 ? (
+                    stories.map((story) => (
+                    <div key={story.id} className="mb-4">
+                        <NavLink
+                        to={`/storyPage/${story.id}`}
+                        className="fs-3 text-decoration-none text-dark fw-semibold"
+                        >
+                        {story.title}
+                        </NavLink>
+                        <p>{story.premise}</p>
+                    </div>
+                    ))
+                ) : (
+                    <p>You haven’t created any stories yet.</p>
+                )}
             </div>
         </div>
     </main>
