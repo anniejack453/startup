@@ -2,6 +2,15 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 export function Browse() {
+    const [review, setReviews] = React.useState([]);
+
+    React.useEffect(() => {
+        const reviewText = localStorage.getItem('review');
+        if (reviewText) {
+        setReviews(JSON.parse(reviewText));
+        }
+    }, []);
+
   return (
     <main>
         <div className="text-center container-fluid">
@@ -11,13 +20,13 @@ export function Browse() {
                     <NavLink to="/storyPage" className="fs-3 text-decoration-none text-dark fw-semibold">
                         Someone's Story Idea #1 (still a link)
                     </NavLink>
-                    <p>Most recent idea suggestion title displayed here</p>
+                    <p id="review">Most recent idea suggestion title displayed here</p>
                 </div>
                 <div>
                     <NavLink to="/storyPage" className="fs-3 text-decoration-none text-dark fw-semibold">
                         Someone's Story Idea #2
                     </NavLink>
-                    <p>This will display links to other users' story idea pages
+                    <p id="review">This will display links to other users' story idea pages
                     stored in the database. Most recent suggestions will be updated
                     in realtime with Websocket.</p>
                 </div>

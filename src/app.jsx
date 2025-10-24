@@ -14,6 +14,29 @@ function App() {
   const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
   const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
   const [authState, setAuthState] = React.useState(currentAuthState);  
+
+  const [stories, setStories] = React.useState(() => {
+    const saved = localStorage.getItem('stories');
+    return saved
+      ? JSON.parse(saved)
+      : [
+          {
+            id: 1,
+            title: 'Story Title',
+            author: 'Author',
+            premise: 'Story premise and original context ideas (saved in database)',
+            ideas: [
+              { title: 'Idea #1 Title', text: 'Idea text (saved in database, updated by websocket)' },
+              { title: 'Idea #2 Title', text: 'Idea text (saved in database, updated by websocket)' },
+            ],
+          },
+        ];
+  });
+
+  React.useEffect(() => {
+    localStorage.setItem('stories', JSON.stringify(stories));
+  }, [stories]);
+
   return (
     <BrowserRouter>
         <div className="body">
@@ -51,10 +74,10 @@ function App() {
 
             <Routes>
                 <Route path='/home' element={<Home />} />
-                <Route path='/browse' element={<Browse />} />
-                <Route path='/contribute' element={<Contribute />} />
-                <Route path='/createStory' element={<CreateStory />} />
-                <Route path='/storyPage' element={<StoryPage />} />
+                <Route path='/browse' element={<Browse stories={stories}/>} />
+                <Route path='/contribute/:id' element={<Contribute stories={stories} setStories={setStories}/>} />
+                <Route path='/createStory' element={<CreateStory stories={stories} setStories={setStories} username={userName}/>} />
+                <Route path='/storyPage/:id' element={<StoryPage stories={stories} setStories={setStories} />} />
                 <Route path='*' element={<NotFound />} />
                 <Route
                     path='/'
