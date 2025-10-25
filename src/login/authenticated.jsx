@@ -29,7 +29,7 @@ export function Authenticated(props) {
       <div
         className="mx-auto p-3 mb-4 border rounded bg-light"
         style={{ maxWidth: '600px', fontStyle: 'italic' }}
-      >
+        >
         {quote ? (
           <>
             <p className="fs-5">"{quote}"</p>

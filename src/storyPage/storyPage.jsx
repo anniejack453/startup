@@ -1,9 +1,39 @@
 import React from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 
-export function StoryPage({stories}) {
+export function StoryPage({stories, setStories}) {
   const { id } = useParams();
-  const story = stories.find((s) => s.id === Number(id));
+  const storyId = Number(id);
+  const [story, setStory] = React.useState(
+    stories.find((s) => s.id === storyId)
+  );
+
+  React.useEffect(() => {
+    if (!story) return;
+
+    const interval = setInterval(() => {
+      const randomId = Math.floor(Math.random() * 1000);
+      const newIdea = {
+        title: `New Idea #${randomId}`,
+        text: `Websocket update idea for "${story.title}"`,
+      };
+
+      setStory((prev) => ({
+        ...prev,
+        ideas: [...prev.ideas, newIdea],
+      }));
+
+      setStories((prevStories) => {
+        const updated = prevStories.map((s) =>
+          s.id === storyId ? { ...s, ideas: [...s.ideas, newIdea] } : s
+        );
+        localStorage.setItem('stories', JSON.stringify(updated));
+        return updated;
+      });
+    }, 20000);
+
+    return () => clearInterval(interval);
+  }, [storyId, story?.title, setStories, story]);
 
   if (!story) {
     return <main className="container-fluid text-center">Story not found</main>;
