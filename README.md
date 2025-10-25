@@ -53,7 +53,7 @@ I am going to use the required technologies in the following ways.
 - **CSS** - Application styling that looks good on different screen sizes, uses good whitespace, color choice and contrast.
 - **React** - Provides login, user functionality by posting stories, ideas, and switching pages.
 - **Service** - Backend service with endpoints for:
-    * Retrieving icons for stories using https://lordicon.com/ 
+    * Retrieving a quote of the day after login
     * Retrieving posts
     * Submitting posts
     * Register, login, and logout users. Credentials securely stored in database. Can't submit anything unless authenticated.
@@ -104,7 +104,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
 - [x] **All functionality implemented or mocked out** - Login functionality, button functionality, storage functionality, api functionality, and websocket functionality implemented or mocked out.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [x] **Hooks** - useState, useEffect implemented.
 
 ## 🚀 Service deliverable
 
