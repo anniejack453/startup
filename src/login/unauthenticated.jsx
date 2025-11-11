@@ -29,7 +29,7 @@ export function Unauthenticated(props) {
       props.onLogin(userName);
     } else {
       const body = await response.json();
-      setDisplayError(`⚠ Error: ${body.msg}`);
+      setDisplayError(`Error: ${body.msg}`);
     }
   }
 
