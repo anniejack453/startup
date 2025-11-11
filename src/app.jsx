@@ -15,27 +15,24 @@ function App() {
   const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
   const [authState, setAuthState] = React.useState(currentAuthState);  
 
-  const [stories, setStories] = React.useState(() => {
-    const saved = localStorage.getItem('stories');
-    return saved
-      ? JSON.parse(saved)
-      : [
-          {
-            id: 1,
-            title: 'Story Title',
-            author: 'Author',
-            premise: 'Story premise and original context ideas (saved in database)',
-            ideas: [
-              { title: 'Idea #1 Title', text: 'Idea text (saved in database, updated by websocket)' },
-              { title: 'Idea #2 Title', text: 'Idea text (saved in database, updated by websocket)' },
-            ],
-          },
-        ];
-  });
+  const [stories, setStories] = React.useState([]);
 
   React.useEffect(() => {
-    localStorage.setItem('stories', JSON.stringify(stories));
-  }, [stories]);
+    async function loadStories() {
+      try {
+        const response = await fetch('/api/stories');
+        if (response.ok) {
+          const data = await response.json();
+          setStories(data);
+        } else {
+          console.error('Failed to fetch stories:', response.status);
+        }
+      } catch (err) {
+        console.error('Error:', err);
+      }
+    }
+    loadStories();
+  }, []);
 
   return (
     <BrowserRouter>

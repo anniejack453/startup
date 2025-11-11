@@ -30,7 +30,7 @@ export function StoryPage({stories, setStories}) {
         localStorage.setItem('stories', JSON.stringify(updated));
         return updated;
       });
-    }, 20000);
+    }, 200000);
 
     return () => clearInterval(interval);
   }, [storyId, story?.title, setStories, story]);

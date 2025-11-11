@@ -5,10 +5,24 @@ export function Browse({userName}) {
     const [stories, setStories] = useState([]);
 
     useEffect(() => {
-        const allStories = JSON.parse(localStorage.getItem('stories')) || [];
-        const otherStories = allStories.filter(story => story.author !== userName);
-        setStories(otherStories);
-    }, [userName]);
+        async function loadStories() {
+          try {
+            const response = await fetch('/api/stories');
+            if (response.ok) {
+              const allStories = await response.json();
+              const userStories = allStories.filter((story) => story.author !== userName);
+              setStories(userStories);
+            } else if (response.status === 401) {
+              console.warn('Not authorized.');
+            } else {
+              console.error('Failed to load stories:', response.status);
+            }
+          } catch (err) {
+            console.error('Error fetching stories:', err);
+          }
+        }
+        loadStories();
+      }, [userName]);
 
   return (
     <main>

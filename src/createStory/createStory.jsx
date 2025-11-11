@@ -6,7 +6,7 @@ export function CreateStory({stories, setStories, userName}) {
   const [premise, setPremise] = React.useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const authorName = userName;
     const newId = stories.length > 0 ? stories[stories.length - 1].id + 1 : 1;
@@ -18,18 +18,30 @@ export function CreateStory({stories, setStories, userName}) {
       ideas: [],
     };
 
-    setStories([...stories, newStory]);
-    localStorage.setItem('stories', JSON.stringify([...stories, newStory]));
-    navigate(`/storyPage/${newId}`);
-  };
+      try {
+        const response = await fetch('/api/stories', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newStory),
+        });
+
+        if (response.ok) {
+          const savedStory = await response.json();
+          setStories([...stories, savedStory]);
+          // localStorage.setItem('stories', JSON.stringify([...stories, savedStory]));
+          navigate(`/storyPage/${newStory.id}`);
+        } else {
+          const error = await response.text();
+          console.error('Error', error);
+        }
+      } catch (err) {
+        console.error('Error:', err);
+      }
+    };
 
   return (
     <main className="container-fluid text-center">
       <form onSubmit={handleSubmit} className="text-center container-fluid">
-            <div>
-            <a href="https://lordicon.com/">Select icon</a>
-            <p>^Placeholder to use API to select icon for story</p>
-            </div>
             <div className="input-group mb-3">
             <input className="mx-auto" style={{width: '300px'}} type="text" placeholder="Story Title" value={title} onChange={(e) => setTitle(e.target.value)}/>
             </div>
