@@ -65,7 +65,7 @@ function App() {
                             setAuthState(AuthState.Unauthenticated);
                             setUserName('');
                             localStorage.removeItem('userName');
-                            localStorage.removeItem('stories');
+                            // localStorage.removeItem('stories');
                             fetch('/api/auth/logout', { method: 'DELETE' });
                         }}>
                             Logout
