@@ -58,6 +58,20 @@ function App() {
                         </NavLink>
                     </li>
                     )}
+                    {authState === AuthState.Authenticated && (
+                    <li className="nav-item">
+                        <NavLink className="nav-link" to="/"
+                        onClick={() => {
+                            setAuthState(AuthState.Unauthenticated);
+                            setUserName('');
+                            localStorage.removeItem('userName');
+                            localStorage.removeItem('stories');
+                            fetch('/api/auth/logout', { method: 'DELETE' });
+                        }}>
+                            Logout
+                        </NavLink>
+                    </li>
+                    )}
                     <li className="nav-item">
                     </li>
                     </menu>
