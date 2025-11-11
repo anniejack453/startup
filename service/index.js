@@ -9,7 +9,6 @@ const authCookieName = 'token';
 // The scores and users are saved in memory and disappear whenever the service is restarted.
 let users = [];
 let stories = [];
-let comments = [];
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -73,15 +72,41 @@ const verifyAuth = async (req, res, next) => {
   }
 };
 
-// GetScores
-apiRouter.get('/scores', verifyAuth, (_req, res) => {
-  res.send(scores);
+apiRouter.get('/stories', verifyAuth, (req, res) => {
+  res.send(stories);
 });
 
-// SubmitScore
-apiRouter.post('/score', verifyAuth, (req, res) => {
-  scores = updateScores(req.body);
-  res.send(scores);
+apiRouter.get('/stories/:id', verifyAuth, (req, res) => {
+  const story = stories.find(s => s.id === parseInt(req.params.id));
+  if (!story) {
+    res.status(404).send({ msg: 'Story not found' });
+  } else {
+    res.send(story);
+  }
+});
+
+apiRouter.post('/stories', verifyAuth, (req, res) => {
+  const { title, author, premise } = req.body;
+  const story = {
+    id: stories.length ? Math.max(...stories.map(s => s.id)) + 1 : 1,
+    title,
+    author,
+    premise,
+    ideas: [],
+  };
+  stories.push(story);
+  res.status(201).send(story);
+});
+
+apiRouter.post('/stories/:id/ideas', verifyAuth, (req, res) => {
+  const story = stories.find(s => s.id === parseInt(req.params.id));
+  if (!story) {
+    res.status(404).send({ msg: 'Story not found' });
+  } else {
+    const newIdea = { title: req.body.title, text: req.body.text };
+    story.ideas.push(newIdea);
+    res.status(201).send(newIdea);
+  }
 });
 
 // Default error handler
@@ -93,28 +118,6 @@ app.use(function (err, req, res, next) {
 app.use((_req, res) => {
   res.sendFile('index.html', { root: 'public' });
 });
-
-// updateScores considers a new score for inclusion in the high scores.
-function updateScores(newScore) {
-  let found = false;
-  for (const [i, prevScore] of scores.entries()) {
-    if (newScore.score > prevScore.score) {
-      scores.splice(i, 0, newScore);
-      found = true;
-      break;
-    }
-  }
-
-  if (!found) {
-    scores.push(newScore);
-  }
-
-  if (scores.length > 10) {
-    scores.length = 10;
-  }
-
-  return scores;
-}
 
 async function createUser(email, password) {
   const passwordHash = await bcrypt.hash(password, 10);
