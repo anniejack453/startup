@@ -6,7 +6,7 @@ const app = express();
 
 const authCookieName = 'token';
 
-// The scores and users are saved in memory and disappear whenever the service is restarted.
+// The stories and users are saved in memory and disappear whenever the service is restarted.
 let users = [];
 let stories = [];
 

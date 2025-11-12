@@ -113,9 +113,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **Node.js/Express HTTP service** - Node.js and Express HTTP servie has been integrated.
 - [x] **Static middleware for frontend** - Static middleware created.
 - [x] **Calls to third party endpoints** - I added a call to an inspirational quote api that is called after logging in.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Supports registration, login, logout, and restricted endpoint** - I did not complete this part of the deliverable.
+- [x] **Backend service endpoints** - Backend service endpoints created to login, logout, and authenticate users. Also to create, find, and update stories and ideas.
+- [x] **Frontend calls service endpoints** - Every page calls a service endpoint that allows the stories and ideas and users to be stored.
+- [x] **Supports registration, login, logout, and restricted endpoint** - This application supports registration, login, logout, and restricted endpoint.
 
 
 ## 🚀 DB deliverable
