@@ -6,23 +6,35 @@ export function Contribute({stories, setStories}) {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [suggestion, setSuggestion] = useState('');
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    setError(null);
+    const newIdea = {title: title || 'Untitled', text: suggestion || 'No text provided'};
+
+    try {
+      const response = await fetch(`/api/stories/${id}/ideas`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newIdea),
+      });
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+      const savedIdea = await response.json();
+
     setStories((prevStories) =>
       prevStories.map((story) =>
         story.id === Number(id)
-          ? {
-              ...story,
-              ideas: [
-                ...story.ideas,
-                { title: title || 'Untitled', text: suggestion || 'No text provided' },
-              ],
-            }
-          : story
+          ? { ...story, ideas: [...story.ideas, savedIdea] }
+            : story
       )
     );
     navigate(`/storyPage/${id}`);
+    } catch (err) {
+      console.error('Error:', err)
+    }
   };
 
   return (
