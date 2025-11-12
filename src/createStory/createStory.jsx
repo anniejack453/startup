@@ -28,8 +28,7 @@ export function CreateStory({stories, setStories, userName}) {
         if (response.ok) {
           const savedStory = await response.json();
           setStories([...stories, savedStory]);
-          // localStorage.setItem('stories', JSON.stringify([...stories, savedStory]));
-          navigate(`/storyPage/${newStory.id}`);
+          navigate(`/storyPage/${savedStory.id}`);
         } else {
           const error = await response.text();
           console.error('Error', error);
