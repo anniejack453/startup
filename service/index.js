@@ -7,10 +7,6 @@ const DB = require('./database.js')
 
 const authCookieName = 'token';
 
-// The stories and users are saved in memory and disappear whenever the service is restarted.
-let users = [];
-let stories = [];
-
 // The service port. In production the front-end code is statically hosted by the service on the same port.
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
@@ -75,12 +71,13 @@ const verifyAuth = async (req, res, next) => {
   }
 };
 
-apiRouter.get('/stories', verifyAuth, (req, res) => {
-  res.send(stories);
+apiRouter.get('/stories', verifyAuth, async (req, res) => {
+  const allStories = await DB.getAllStories();
+  res.send(allStories);
 });
 
-apiRouter.get('/stories/:id', verifyAuth, (req, res) => {
-  const story = stories.find(s => s.id === parseInt(req.params.id));
+apiRouter.get('/stories/:id', verifyAuth, async (req, res) => {
+  const story = await DB.getStory(req.params.id);
   if (!story) {
     res.status(404).send({ msg: 'Story not found' });
   } else {
@@ -88,7 +85,7 @@ apiRouter.get('/stories/:id', verifyAuth, (req, res) => {
   }
 });
 
-apiRouter.post('/stories', verifyAuth, (req, res) => {
+apiRouter.post('/stories', verifyAuth, async (req, res) => {
   const { title, author, premise } = req.body;
   const story = {
     id: stories.length ? Math.max(...stories.map(s => s.id)) + 1 : 1,
@@ -97,19 +94,14 @@ apiRouter.post('/stories', verifyAuth, (req, res) => {
     premise,
     ideas: [],
   };
-  stories.push(story);
-  res.status(201).send(story);
+  const saved = await DB.addStory(story)
+  res.status(201).send(saved);
 });
 
-apiRouter.post('/stories/:id/ideas', verifyAuth, (req, res) => {
-  const story = stories.find(s => s.id === parseInt(req.params.id));
-  if (!story) {
-    res.status(404).send({ msg: 'Story not found' });
-  } else {
-    const newIdea = { title: req.body.title, text: req.body.text };
-    story.ideas.push(newIdea);
-    res.status(201).send(newIdea);
-  }
+apiRouter.post('/stories/:id/ideas', verifyAuth, async (req, res) => {
+  const newIdea = { title: req.body.title, text: req.body.text };
+  const saved = await DB.addIdeaToStory(req.params.id, newIdea);
+  res.status(201).send(saved);
 });
 
 // Default error handler
