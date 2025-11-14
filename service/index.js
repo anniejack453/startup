@@ -88,9 +88,6 @@ apiRouter.get('/stories/:id', verifyAuth, async (req, res) => {
 apiRouter.post('/stories', verifyAuth, async (req, res) => {
   try {
     const { title, author, premise } = req.body;
-    if (!title || !premise || !author) {
-      return res.status(400).send('Missing required fields');
-    }
     const stories = await DB.getAllStories();
     const newStory = {
       id: stories.length > 0 ? stories[stories.length - 1].id + 1 : 1,

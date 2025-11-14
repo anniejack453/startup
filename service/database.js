@@ -47,10 +47,7 @@ function getAllStories() {
 }
 
 async function addIdeaToStory(id, idea) {
-    await storyCollection.updateOne(
-        { id: parseInt(id) },
-        { $push: { ideas: idea } }
-    );
+    await storyCollection.updateOne({ id: parseInt(id) }, { $push: { ideas: idea } });
     return idea;
 }
 
