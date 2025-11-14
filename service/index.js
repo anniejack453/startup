@@ -87,6 +87,7 @@ apiRouter.get('/stories/:id', verifyAuth, async (req, res) => {
 
 apiRouter.post('/stories', verifyAuth, async (req, res) => {
   const { title, author, premise } = req.body;
+  const stories = await DB.getAllStories();
   const story = {
     id: stories.length ? Math.max(...stories.map(s => s.id)) + 1 : 1,
     title,
@@ -94,14 +95,14 @@ apiRouter.post('/stories', verifyAuth, async (req, res) => {
     premise,
     ideas: [],
   };
-  const saved = await DB.addStory(story)
-  res.status(201).send(saved);
+  await DB.addStory(story)
+  res.status(201).send(story);
 });
 
 apiRouter.post('/stories/:id/ideas', verifyAuth, async (req, res) => {
   const newIdea = { title: req.body.title, text: req.body.text };
-  const saved = await DB.addIdeaToStory(req.params.id, newIdea);
-  res.status(201).send(saved);
+  await DB.addIdeaToStory(req.params.id, newIdea);
+  res.status(201).send(newIdea);
 });
 
 // Default error handler
