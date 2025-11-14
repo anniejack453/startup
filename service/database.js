@@ -32,3 +32,30 @@ async function addUser(user) {
 async function updateUser(user) {
   await userCollection.updateOne({ email: user.email }, { $set: user });
 }
+
+async function addStory(story) {
+
+}
+
+function getStory(id) {
+
+}
+
+function getAllStories() {
+
+}
+
+async function addIdeaToStory(id, idea) {
+    
+}
+
+module.exports = {
+  getUser,
+  getUserByToken,
+  addUser,
+  updateUser,
+  addStory,
+  getStory,
+  getAllStories,
+  addIdeaToStory,
+};
