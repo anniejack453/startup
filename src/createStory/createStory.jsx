@@ -9,13 +9,10 @@ export function CreateStory({stories, setStories, userName}) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const authorName = userName;
-    const newId = stories.length > 0 ? stories[stories.length - 1].id + 1 : 1;
     const newStory = {
-      id: newId,
       title,
       author: userName,
       premise,
-      ideas: [],
     };
 
       try {

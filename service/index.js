@@ -86,17 +86,25 @@ apiRouter.get('/stories/:id', verifyAuth, async (req, res) => {
 });
 
 apiRouter.post('/stories', verifyAuth, async (req, res) => {
-  const { title, author, premise } = req.body;
-  const stories = await DB.getAllStories();
-  const story = {
-    id: stories.length ? Math.max(...stories.map(s => s.id)) + 1 : 1,
-    title,
-    author,
-    premise,
-    ideas: [],
-  };
-  await DB.addStory(story)
-  res.status(201).send(story);
+  try {
+    const { title, author, premise } = req.body;
+    if (!title || !premise || !author) {
+      return res.status(400).send('Missing required fields');
+    }
+    const stories = await DB.getAllStories();
+    const newStory = {
+      id: stories.length > 0 ? stories[stories.length - 1].id + 1 : 1,
+      title,
+      author,
+      premise,
+      ideas: [],
+    };
+    const savedStory = await DB.addStory(newStory);
+    res.status(201).send(savedStory);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('Error creating story');
+  }
 });
 
 apiRouter.post('/stories/:id/ideas', verifyAuth, async (req, res) => {
