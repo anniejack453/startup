@@ -6,14 +6,27 @@ function peerProxy(httpServer) {
 
   socketServer.on('connection', (socket) => {
     socket.isAlive = true;
+    socket.currentStory = null;
 
-    // Forward messages to everyone except the sender
-    socket.on('message', function message(data) {
-      socketServer.clients.forEach((client) => {
-        if (client !== socket && client.readyState === WebSocket.OPEN) {
-          client.send(data);
+    socket.on('message', (data) => {
+        const msg = JSON.parse(data);
+
+        if (msg.type === "join-story") {
+            socket.currentStory = msg.storyId;
+            return;
         }
-      });
+
+        if (msg.type === "new-idea") {
+            socketServer.clients.forEach((client) => {
+                if (
+                    client !== socket &&
+                    client.readyState === WebSocket.OPEN &&
+                    client.currentStory === msg.storyId
+                ) {
+                    client.send(JSON.stringify(msg));
+                }
+            });
+        }
     });
 
     // Respond to pong messages by marking the connection alive
