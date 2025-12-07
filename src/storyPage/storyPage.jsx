@@ -24,40 +24,64 @@ export function StoryPage({stories, setStories}) {
   }, [storyId]);
 
   React.useEffect(() => {
-    if (!story) return;
+    const socket = new WebSocket(`ws://${window.location.host}`);
 
-    const interval = setInterval(async () => {
-      const randomId = Math.floor(Math.random() * 1000);
-      const newIdea = {
-        title: `New Idea #${randomId}`,
-        text: `Websocket update idea for "${story.title}"`,
-      };
+    socket.onopen = () => {
+      socket.send(JSON.stringify({
+        type: "join-story",
+        storyId: storyId
+      }));
+    };
 
-      try {
-      const response = await fetch(`/api/stories/${storyId}/ideas`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newIdea),
-      });
+    socket.onmessage = (event) => {
+      const msg = JSON.parse(event.data);
 
-      if (response.ok) {
-        const savedIdea = await response.json();
-        setStory(prev => ({...prev, ideas: [...prev.ideas, savedIdea]}));
-        setStories(prev =>
-          prev.map(s =>
-            s.id === storyId
-              ? { ...s, ideas: [...s.ideas, savedIdea] }
-              : s
-          )
-        );
+      if (msg.type === "new-idea" && msg.storyId === storyId) {
+        setStory(prev => ({
+          ...prev,
+          ideas: [...prev.ideas, msg.idea]
+        }));
       }
-    } catch (err) {
-      console.error('Error:', err);
-    }
-    }, 20000);
+    };
 
-    return () => clearInterval(interval);
-  }, [storyId, story?.title, setStories, story]);
+    return () => socket.close();
+  }, [storyId]);
+
+  // React.useEffect(() => {
+  //   if (!story) return;
+
+  //   const interval = setInterval(async () => {
+  //     const randomId = Math.floor(Math.random() * 1000);
+  //     const newIdea = {
+  //       title: `New Idea #${randomId}`,
+  //       text: `Websocket update idea for "${story.title}"`,
+  //     };
+
+  //     try {
+  //     const response = await fetch(`/api/stories/${storyId}/ideas`, {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify(newIdea),
+  //     });
+
+  //     if (response.ok) {
+  //       const savedIdea = await response.json();
+  //       setStory(prev => ({...prev, ideas: [...prev.ideas, savedIdea]}));
+  //       setStories(prev =>
+  //         prev.map(s =>
+  //           s.id === storyId
+  //             ? { ...s, ideas: [...s.ideas, savedIdea] }
+  //             : s
+  //         )
+  //       );
+  //     }
+  //   } catch (err) {
+  //     console.error('Error:', err);
+  //   }
+  //   }, 20000);
+
+  //   return () => clearInterval(interval);
+  // }, [storyId, story?.title, setStories, story]);
 
   if (!story) {
     return <main className="container-fluid text-center">Story not found</main>;
