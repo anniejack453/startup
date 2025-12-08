@@ -4,6 +4,7 @@ function peerProxy(httpServer) {
   // Create a websocket object
   const socketServer = new WebSocketServer({ server: httpServer });
 
+
   socketServer.on('connection', (socket) => {
     socket.isAlive = true;
     socket.currentStory = null;
@@ -13,19 +14,38 @@ function peerProxy(httpServer) {
 
         if (msg.type === "join-story") {
             socket.currentStory = msg.storyId;
-            return;
-        }
-
-        if (msg.type === "new-idea") {
             socketServer.clients.forEach((client) => {
                 if (
+                    client !== socket &&
                     client.readyState === WebSocket.OPEN &&
                     client.currentStory === msg.storyId
                 ) {
-                    client.send(JSON.stringify(msg));
+                    client.send(JSON.stringify({
+                      type: "user-joined",
+                      storyId: msg.storyId
+                    }));
                 }
             });
+          return;
         }
+
+        // if (msg.type === "new-idea") {
+        //     socketServer.clients.forEach((client) => {
+        //         if (
+        //             client.readyState === WebSocket.OPEN &&
+        //             client.currentStory === msg.storyId
+        //         ) {
+        //             client.send(JSON.stringify(msg));
+        //         }
+        //     });
+        // }
+    });
+    socketServer.on('close', (code, reason) => {
+        console.log('WS closed', {
+          code,
+          reason: reason.toString(),
+          wasClean: code === 1000
+        });
     });
 
     // Respond to pong messages by marking the connection alive

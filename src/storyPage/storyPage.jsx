@@ -5,14 +5,16 @@ export function StoryPage({stories, setStories}) {
   const { id } = useParams();
   const storyId = Number(id);
   const [story, setStory] = React.useState(null);
+  const socketRef = React.useRef(null);
 
   React.useEffect(() => {
+    let isConnected = true
     async function fetchStory() {
       try {
         const response = await fetch(`/api/stories/${storyId}`);
         if (response.ok) {
           const data = await response.json();
-          setStory(data);
+          if (isConnected) setStory(data);
         } else {
           console.error('Error:', response.status);
         }
@@ -21,67 +23,39 @@ export function StoryPage({stories, setStories}) {
       }
     }
     fetchStory();
+    return () => {
+      isConnected = false;
+    };
   }, [storyId]);
 
   React.useEffect(() => {
-    const socket = new WebSocket(`ws://${window.location.host}`);
+    const socket = new WebSocket(`ws://${window.location.hostname}:4000`);
+    socketRef.current = socket
 
     socket.onopen = () => {
       socket.send(JSON.stringify({
         type: "join-story",
-        storyId: storyId
+        storyId: storyId,
       }));
     };
 
     socket.onmessage = (event) => {
       const msg = JSON.parse(event.data);
 
-      if (msg.type === "new-idea" && msg.storyId === storyId) {
-        setStory(prev => ({
-          ...prev,
-          ideas: [...prev.ideas, msg.idea]
-        }));
+      if (msg.type === "user-joined" && msg.storyId === storyId) {
+        console.log("Someone joined this story");
+        alert("Another writer joined this story"); 
       }
     };
+    socket.onerror = (e) => console.error("WS error", e);
+    socket.onclose = () => {
+      console.log("WS closed");
+    };
 
-    return () => socket.close();
+    return () => {
+      socket.close(1000, "User navigated away");
+    };
   }, [storyId]);
-
-  // React.useEffect(() => {
-  //   if (!story) return;
-
-  //   const interval = setInterval(async () => {
-  //     const randomId = Math.floor(Math.random() * 1000);
-  //     const newIdea = {
-  //       title: `New Idea #${randomId}`,
-  //       text: `Websocket update idea for "${story.title}"`,
-  //     };
-
-  //     try {
-  //     const response = await fetch(`/api/stories/${storyId}/ideas`, {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify(newIdea),
-  //     });
-
-  //     if (response.ok) {
-  //       const savedIdea = await response.json();
-  //       setStory(prev => ({...prev, ideas: [...prev.ideas, savedIdea]}));
-  //       setStories(prev =>
-  //         prev.map(s =>
-  //           s.id === storyId
-  //             ? { ...s, ideas: [...s.ideas, savedIdea] }
-  //             : s
-  //         )
-  //       );
-  //     }
-  //   } catch (err) {
-  //     console.error('Error:', err);
-  //   }
-  //   }, 20000);
-
-  //   return () => clearInterval(interval);
-  // }, [storyId, story?.title, setStories, story]);
 
   if (!story) {
     return <main className="container-fluid text-center">Story not found</main>;
