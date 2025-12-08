@@ -19,7 +19,6 @@ function peerProxy(httpServer) {
         if (msg.type === "new-idea") {
             socketServer.clients.forEach((client) => {
                 if (
-                    client !== socket &&
                     client.readyState === WebSocket.OPEN &&
                     client.currentStory === msg.storyId
                 ) {
