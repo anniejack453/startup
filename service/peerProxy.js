@@ -28,17 +28,6 @@ function peerProxy(httpServer) {
             });
           return;
         }
-
-        // if (msg.type === "new-idea") {
-        //     socketServer.clients.forEach((client) => {
-        //         if (
-        //             client.readyState === WebSocket.OPEN &&
-        //             client.currentStory === msg.storyId
-        //         ) {
-        //             client.send(JSON.stringify(msg));
-        //         }
-        //     });
-        // }
     });
     socketServer.on('close', (code, reason) => {
         console.log('WS closed', {
