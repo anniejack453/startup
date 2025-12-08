@@ -1,3 +1,4 @@
+const config = require('./apiConfig.json');
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const express = require('express');
@@ -109,6 +110,14 @@ apiRouter.post('/stories/:id/ideas', verifyAuth, async (req, res) => {
   const newIdea = { title: req.body.title, text: req.body.text };
   await DB.addIdeaToStory(req.params.id, newIdea);
   res.status(201).send(newIdea);
+});
+
+apiRouter.get('/quote', verifyAuth, async (req, res) => {
+  const response = await fetch('https://api.api-ninjas.com/v2/quoteoftheday', {
+    headers: { "X-Api-Key": config.api_key }
+  });
+  const data = await response.json();
+  res.json(data);
 });
 
 // Default error handler
