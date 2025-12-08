@@ -22,13 +22,15 @@ export function Authenticated(props) {
   }
 
   useEffect(() => {
-    fetch('https://quotes.domiadi.com/api')
-      .then((response) => response.json())
+    fetch("/api/quote")
+      .then((res) => res.json())
       .then((data) => {
-        setQuote(data.quote);
-        setAuthor(data.from);
+        setQuote(data[0].quote);
+        console.log(data[0].quote)
+        setAuthor(data[0].author);
+        console.log(data[0].author)
       })
-      .catch((error) => console.error('Error:', error));
+      .catch(err => console.error("Error:", err));
   }, []);
 
   return (
