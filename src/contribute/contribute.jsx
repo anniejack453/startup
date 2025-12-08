@@ -7,12 +7,6 @@ export function Contribute({stories, setStories}) {
   const [title, setTitle] = useState('');
   const [suggestion, setSuggestion] = useState('');
   const [error, setError] = useState(null);
-  const socket = React.useRef(null);
-
-  React.useEffect(() => {
-    socket.current = new WebSocket(`ws://${window.location.host}`);
-    return () => socket.current.close();
-  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -29,11 +23,6 @@ export function Contribute({stories, setStories}) {
         throw new Error(`Error: ${response.status}`);
       }
       const savedIdea = await response.json();
-      socket.current.send(JSON.stringify({
-        type: "new-idea",
-        storyId: Number(id),
-        idea: savedIdea
-      }));
 
       setStories((prevStories) =>
         prevStories.map((story) =>
