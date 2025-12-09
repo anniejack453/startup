@@ -14,8 +14,10 @@ function App() {
   const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
   const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
   const [authState, setAuthState] = React.useState(currentAuthState);  
-
   const [stories, setStories] = React.useState([]);
+  const port = window.location.port;
+  const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+  const socket = new WebSocket(`${protocol}://${window.location.hostname}:${port}/ws`);
 
   React.useEffect(() => {
     async function loadStories() {
@@ -88,7 +90,7 @@ function App() {
                 <Route path='/browse' element={<Browse userName={userName}/>} />
                 <Route path='/contribute/:id' element={<Contribute stories={stories} setStories={setStories}/>} />
                 <Route path='/createStory' element={<CreateStory stories={stories} setStories={setStories} userName={userName}/>} />
-                <Route path='/storyPage/:id' element={<StoryPage stories={stories} setStories={setStories} />} />
+                <Route path='/storyPage/:id' element={<StoryPage stories={stories} setStories={setStories} socket={socket} />} />
                 <Route path='*' element={<NotFound />} />
                 <Route
                     path='/'

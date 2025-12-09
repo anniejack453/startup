@@ -26,7 +26,6 @@ function peerProxy(httpServer) {
                     }));
                 }
             });
-          return;
         }
     });
     socketServer.on('close', (code, reason) => {

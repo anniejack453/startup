@@ -1,10 +1,11 @@
 import React from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 
-export function StoryPage({stories, setStories}) {
+export function StoryPage({socket}) {
   const { id } = useParams();
   const storyId = Number(id);
   const [story, setStory] = React.useState(null);
+  const [notice, setNotice] = React.useState("");
   const socketRef = React.useRef(null);
 
   React.useEffect(() => {
@@ -29,7 +30,6 @@ export function StoryPage({stories, setStories}) {
   }, [storyId]);
 
   React.useEffect(() => {
-    const socket = new WebSocket(`ws://${window.location.hostname}:4000`);
     socketRef.current = socket
 
     socket.onopen = () => {
@@ -41,10 +41,10 @@ export function StoryPage({stories, setStories}) {
 
     socket.onmessage = (event) => {
       const msg = JSON.parse(event.data);
+      console.log("WS message received:", msg);
 
       if (msg.type === "user-joined" && msg.storyId === storyId) {
-        console.log("Someone joined this story");
-        alert("Another writer joined this story"); 
+        setNotice("Another writer contibuted to the story. Refresh.");
       }
     };
     socket.onerror = (e) => console.error("WS error", e);
@@ -62,7 +62,20 @@ export function StoryPage({stories, setStories}) {
   }
 
   return (
+    <>
     <main className="container-fluid text-center">
+      {notice && (
+        <div style={{
+          position: "fixed",
+          top: "100px",
+          left: "10px",
+          padding: "8px 12px",
+          borderRadius: "6px",
+          color: "black"
+        }}>
+          {notice}
+        </div>
+      )}
       <div className="container-fluid mx-auto" style={{maxWidth: '800px', padding: '20px'}}>
             <div id="story" className="mx-auto text-center" style={{padding: '20px'}}>
                 <h2>{story.title}</h2>
@@ -82,5 +95,6 @@ export function StoryPage({stories, setStories}) {
             </NavLink>
         </div>
     </main>
+    </>
   );
 }
